@@ -1,0 +1,29 @@
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from app.database import Base, engine
+from app.models import Ticket
+from app.routes.tickets import router
+
+Base.metadata.create_all(bind=engine)
+
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # Vite ka default port
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(
+    router,
+    prefix="/api",
+    tags=["Tickets"]
+)
+
+@app.get("/")
+def home():
+    return {
+        "message": "Support CRM API Running"
+    }
