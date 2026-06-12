@@ -10,7 +10,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # Vite ka default port
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -24,6 +24,4 @@ app.include_router(
 
 @app.get("/")
 def home():
-    return {
-        "message": "Support CRM API Running"
-    }
+    return {"message": "Support CRM API Running"}
